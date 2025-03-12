@@ -232,7 +232,7 @@ func newBlock(t LineType) Block {
 
 func parseBlocks(ls *[]Line) ([]Block, error) {
 	var blocks []Block
-	blocks = append(blocks, newBlock(TextLine))
+	blocks = append(blocks, &TextBlock{})
 
 	for _, l := range *ls {
 		action := blocks[len(blocks)-1].addLine(&l)
@@ -240,7 +240,7 @@ func parseBlocks(ls *[]Line) ([]Block, error) {
 		case Add:
 			continue
 		case AddAndClose:
-			blocks = append(blocks, newBlock(TextLine))
+			blocks = append(blocks, &TextBlock{})
 			continue
 		case Close:
 		case Bad:
