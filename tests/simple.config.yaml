@@ -1,0 +1,18 @@
+notebook:
+  default:
+    command_name: bash-1
+  commands:
+  - name: bash-1
+    command: bash
+    display_style: raw
+    expand:
+      command_name: bash-one
+      block_name: bash-shell
+      style: NONE
+  - name: bash-quote
+    command: bash
+    display_style: quote
+    expand:
+      command_name: bash
+      block_name: bash
+      style: LINE
