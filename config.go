@@ -51,8 +51,8 @@ type Expand struct {
 type DisplayStyle int64
 
 const (
-	RAW DisplayStyle = iota + 1
-	QUOTE
+	QUOTE DisplayStyle = iota + 1
+	RAW
 )
 
 func (t *DisplayStyle) UnmarshalYAML(n *yaml.Node) error {

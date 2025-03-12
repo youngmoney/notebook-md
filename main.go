@@ -24,7 +24,7 @@ func readLines() []string {
 }
 
 func errorOutput(s string) *OutputBlock {
-	return &OutputBlock{Lines: []string{s}, Modified: time.Now()}
+	return &OutputBlock{Lines: []string{"Error: " + s}, Modified: time.Now()}
 }
 
 func executeGroup(i *ExecutionGroup, config *Config) *ExecutionGroup {
@@ -46,7 +46,7 @@ func executeGroup(i *ExecutionGroup, config *Config) *ExecutionGroup {
 		return &o
 	}
 	out, err := ExecuteCommandCapture(m.Command, args, i.Code.CommandBody())
-	n := OutputBlockFromResult(strings.Trim(out, "\n"), err)
+	n := OutputBlockFromResult(strings.Trim(out, "\n"), err, m.DisplayStyle)
 	n.Modified = time.Now()
 	o.Output = &n
 
@@ -88,7 +88,11 @@ func main() {
 	case "execute":
 		fs := flag.NewFlagSet("execute", flag.ExitOnError)
 		fs.Parse(flag.Args()[1:])
-		ExitIfNonZero(commandExecute(&config))
+		err := commandExecute(&config)
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
 	case "expand":
 		fs := flag.NewFlagSet("expand", flag.ExitOnError)
 		fs.Parse(flag.Args()[1:])
