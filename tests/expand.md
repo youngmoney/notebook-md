@@ -1,32 +1,51 @@
-Simple test
+Expand test
 
-``` bash-1
+None
+
+``` none
 echo 1
+echo 2
+echo 3
 ```
 
-Quoted
+Hide
 
-``` bash-quote
-echo quoted
-echo again
+``` hide
+echo 1
+echo 2
+echo 3
 ```
 
-Does not exist
+Line
 
-``` does-not-exit
-echo does not exist
+``` line
+echo 1
+echo 2
+echo 3
 ```
 
-``` cat-hat
-1
-2
-3
+Once
+
+``` once
+echo 1
+echo 2
+echo 3
 ```
 
-Existing Output
+Heredoc
 
-``` bash-1
-echo 11
+``` heredoc
+echo 1
+echo 2
+echo 3
+```
+
+With Output
+
+``` line
+echo 1
+echo 2
+echo 3
 ```
 
 <!-- notebook output start -->

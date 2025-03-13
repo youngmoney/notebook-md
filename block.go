@@ -111,6 +111,37 @@ func (b CodeBlock) Empty() bool {
 	return false
 }
 
+func (b CodeBlock) Expand(e Expand) string {
+	var block_name = e.BlockName
+	if block_name == "" && len(b.Command) > 0 {
+		block_name = b.Command[0]
+	}
+	var start = kCodeTick
+	if block_name != "" {
+		start = start + " " + block_name
+	}
+
+	var command = e.CommandName
+	if command == "" {
+		command = strings.Join(b.Command, " ")
+	}
+	var body = strings.Join(b.Content(), "\n")
+	switch e.Style {
+	case NONE:
+		return b.String()
+	case HIDE:
+		return ""
+	case LINE:
+		body = strings.Join(b.Content(), " ")
+	case ONCE:
+		body = strings.Join([]string{command, body}, "\n\n")
+	case HEREDOC:
+		body = command + " << EOF\n" + body + "\nEOF"
+	}
+
+	return start + "\n" + body + "\n" + kCodeTick
+}
+
 type OutputBlock struct {
 	Lines    []string
 	Modified time.Time

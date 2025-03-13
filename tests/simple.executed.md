@@ -15,12 +15,14 @@ Quoted
 
 ``` bash-quote
 echo quoted
+echo again
 ```
 
 <!-- notebook output start -->
 <!-- notebook output modified 2025-03-12T08:16:31 -->
 
 >        quoted
+>        again
 
 <!-- notebook output end -->
 

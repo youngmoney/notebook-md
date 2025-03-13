@@ -13,8 +13,8 @@ notebook:
     command: bash
     display_style: quote
     expand:
-      command_name: bash
-      block_name: bash
+      command_name: bashing
+      block_name: basher
       style: LINE
   - name: cat-hat
     command: cat

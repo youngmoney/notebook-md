@@ -89,3 +89,17 @@ func (g ExecutionGroup) String() string {
 func (g ExecutionGroup) Empty() bool {
 	return false
 }
+
+func (g ExecutionGroup) Expand(e Expand) string {
+	var extra string
+	if g.ConsumedEmptyLine && !g.StartedWithOutput {
+		extra = "\n"
+	}
+	if g.Code == nil {
+		return ""
+	}
+	if g.Output == nil {
+		return g.Code.Expand(e) + extra
+	}
+	return g.Code.Expand(e) + "\n\n" + g.Output.String() + extra
+}

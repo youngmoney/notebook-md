@@ -16,11 +16,11 @@ type Default struct {
 type ExpandStyle int64
 
 const (
-	NONE ExpandStyle = iota + 1
-	HIDE
-	LINE
+	NONE ExpandStyle = iota + 1 // leave as is
+	HIDE                        // remove when expanding
+	LINE                        // remove new lines from code block
 	ONCE
-	HEREDOC
+	HEREDOC // replace with bash heredoc
 )
 
 func (t *ExpandStyle) UnmarshalYAML(n *yaml.Node) error {

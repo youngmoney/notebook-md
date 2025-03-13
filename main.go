@@ -79,7 +79,41 @@ func commandExecute(config *Config) error {
 	return nil
 }
 
+func expand(i *ExecutionGroup, config *Config) string {
+	var name = config.Notebook.Default.CommandName
+	if len(i.Code.Command) > 0 {
+		name = i.Code.Command[0]
+	}
+	if name == "" {
+		return i.Expand(Expand{})
+	}
+	m := Match(name, &config.Notebook.Commands)
+	if m == nil {
+		return i.Expand(Expand{})
+	}
+	return i.Expand(m.Expand)
+}
+
 func commandExpand(config *Config) error {
+	lines := readLines()
+	groups, err := parse(&lines)
+	if err != nil {
+		return err
+	}
+	for i, g := range groups {
+		var out string
+		switch g.(type) {
+		case *TextGroup:
+			out = g.String()
+		case *ExecutionGroup:
+			out = expand(g.(*ExecutionGroup), config)
+		}
+		if i == len(out)-1 {
+			fmt.Println(strings.TrimSuffix(out, "\n"))
+		} else {
+			fmt.Println(out)
+		}
+	}
 	return nil
 }
 

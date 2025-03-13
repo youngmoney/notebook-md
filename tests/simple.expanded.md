@@ -6,9 +6,8 @@ echo 1
 
 Quoted
 
-``` bash-quote
-echo quoted
-echo again
+``` basher
+echo quoted echo again
 ```
 
 Does not exist
@@ -43,3 +42,4 @@ Extra
 Extra Output
 
 <!-- notebook output end -->
+
