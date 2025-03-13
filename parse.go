@@ -80,9 +80,9 @@ func parseBlocks(ls *[]Line) ([]Block, error) {
 
 	var keep []Block
 	for _, b := range blocks {
-		if b.Empty() {
-			continue
-		}
+		// if b.Empty() {
+		// 	continue
+		// }
 		keep = append(keep, b)
 	}
 
@@ -123,7 +123,7 @@ func parseGroups(blocks []Block) ([]Group, error) {
 
 	var keep []Group
 	for _, g := range groups {
-		if g.String() == "" {
+		if g.Empty() {
 			continue
 		}
 		keep = append(keep, g)

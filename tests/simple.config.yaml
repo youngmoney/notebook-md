@@ -16,3 +16,6 @@ notebook:
       command_name: bash
       block_name: bash
       style: LINE
+  - name: cat-hat
+    command: cat
+    display_style: quote

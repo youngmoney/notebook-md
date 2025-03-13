@@ -37,7 +37,22 @@ Error: command not found: does-not-exit
 
 <!-- notebook output end -->
 
-Existing Oupput
+``` cat-hat
+1
+2
+3
+```
+
+<!-- notebook output start -->
+<!-- notebook output modified 2025-03-12T08:16:31 -->
+
+>        1
+>        2
+>        3
+
+<!-- notebook output end -->
+
+Existing Output
 
 ``` bash-1
 echo 11

@@ -16,7 +16,13 @@ Does not exist
 echo does not exist
 ```
 
-Existing Oupput
+``` cat-hat
+1
+2
+3
+```
+
+Existing Output
 
 ``` bash-1
 echo 11

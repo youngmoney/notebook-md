@@ -171,7 +171,7 @@ func (b OutputBlock) Header() []string {
 	if !b.Modified.IsZero() {
 		lines = append(lines, b.Modified.Format(kOutputModifiedTimeLineFormat))
 	}
-	if b.Lines[0] != "" {
+	if len(b.Lines) > 0 && b.Lines[0] != "" {
 		lines = append(lines, "")
 	}
 	return lines
@@ -182,7 +182,7 @@ func (b OutputBlock) Content() []string {
 }
 
 func (b OutputBlock) Footer() []string {
-	if b.Lines[len(b.Lines)-1] == "" {
+	if len(b.Lines) == 0 || b.Lines[len(b.Lines)-1] == "" {
 		return []string{kOutputBlockEnd}
 	}
 	return []string{"", kOutputBlockEnd}

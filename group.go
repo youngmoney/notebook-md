@@ -3,6 +3,7 @@ package main
 type Group interface {
 	add(block Block) AddAction
 	String() string
+	Empty() bool
 }
 
 type TextGroup struct {
@@ -35,9 +36,15 @@ func (g TextGroup) String() string {
 	return s
 }
 
+func (g TextGroup) Empty() bool {
+	return len(g.Blocks) == 0
+}
+
 type ExecutionGroup struct {
-	Code   *CodeBlock
-	Output *OutputBlock
+	Code              *CodeBlock
+	Output            *OutputBlock
+	ConsumedEmptyLine bool
+	StartedWithOutput bool
 }
 
 func (g *ExecutionGroup) add(block Block) AddAction {
@@ -51,11 +58,13 @@ func (g *ExecutionGroup) add(block Block) AddAction {
 	case *OutputBlock:
 		if g.Code != nil && g.Output == nil {
 			g.Output = block.(*OutputBlock)
+			g.StartedWithOutput = true
 			return AddAndClose
 		}
 		return Close
 	case *TextBlock:
 		if g.Code != nil && g.Output == nil && block.String() == "" {
+			g.ConsumedEmptyLine = true
 			return Add
 		}
 		return Close
@@ -64,11 +73,19 @@ func (g *ExecutionGroup) add(block Block) AddAction {
 }
 
 func (g ExecutionGroup) String() string {
+	var extra string
+	if g.ConsumedEmptyLine && !g.StartedWithOutput {
+		extra = "\n"
+	}
 	if g.Code == nil {
 		return ""
 	}
 	if g.Output == nil {
-		return g.Code.String()
+		return g.Code.String() + extra
 	}
-	return g.Code.String() + "\n\n" + g.Output.String()
+	return g.Code.String() + "\n\n" + g.Output.String() + extra
+}
+
+func (g ExecutionGroup) Empty() bool {
+	return false
 }

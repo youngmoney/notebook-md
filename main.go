@@ -28,7 +28,8 @@ func errorOutput(s string) *OutputBlock {
 }
 
 func executeGroup(i *ExecutionGroup, config *Config) *ExecutionGroup {
-	var o = ExecutionGroup{Code: i.Code}
+	o := *i
+	o.Output = nil
 
 	var name = config.Notebook.Default.CommandName
 	var args []string
@@ -68,8 +69,12 @@ func commandExecute(config *Config) error {
 			out = append(out, executeGroup(g.(*ExecutionGroup), config))
 		}
 	}
-	for _, g := range out {
-		fmt.Println(g)
+	for i, g := range out {
+		if i == len(out)-1 {
+			fmt.Println(strings.TrimSuffix(g.String(), "\n"))
+		} else {
+			fmt.Println(g)
+		}
 	}
 	return nil
 }
@@ -87,6 +92,7 @@ func main() {
 	switch flag.Arg(0) {
 	case "execute":
 		fs := flag.NewFlagSet("execute", flag.ExitOnError)
+		// lines := fs.String("line", "", "lines to execute <line>|<start line>-<end line>|-<end-line>|<start-line>- comma seperated")
 		fs.Parse(flag.Args()[1:])
 		err := commandExecute(&config)
 		if err != nil {
