@@ -20,13 +20,13 @@ To expand code blocks using a different style for use in publishing:
 
 ### File
 
-``` markdown
+```` markdown
 # Simple File
 
-\`\`\`bash
+```bash
 echo hello world
-\`\`\`
 ```
+````
 
 ### Config
 
@@ -43,12 +43,12 @@ notebook:
 
 `cat <file> | notebook-md execute`
 
-``` markdown
+```` markdown
 # Simple File
 
-\`\`\`bash
+```bash
 echo hello world
-\`\`\`
+```
 
 <!-- notebook output start -->
 <!-- notebook output modified -->
@@ -56,20 +56,20 @@ echo hello world
 >        hello world
 
 <!-- notebook output end -->
-```
+````
 
 ### Expanded
 
 `cat <file> | notebook-md execute | notebook-md expand`
 
-``` markdown
+```` markdown
 # Simple File
 
-\`\`\`bash
+```bash
 bash << EOF
 echo hello world
 EOF
-\`\`\`
+```
 
 <!-- notebook output start -->
 <!-- notebook output modified -->
@@ -77,7 +77,7 @@ EOF
 >        hello world
 
 <!-- notebook output end -->
-```
+````
 
 ## Config
 
