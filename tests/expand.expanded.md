@@ -20,7 +20,7 @@ echo 1 echo 2 echo 3
 
 Once
 
-``` once-block
+``` once
 once-name
 
 echo 1

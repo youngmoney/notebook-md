@@ -4,21 +4,16 @@ notebook:
     command: bash
     display_style: raw
     expand:
-      command_name: none-name
-      block_name: none-block
       style: none
   - name: hide
     command: bash
     display_style: raw
     expand:
-      command_name: hide-name
-      block_name: hide-block
       style: hide
   - name: line
     command: bash
     display_style: raw
     expand:
-      command_name: line-name
       block_name: line-block
       style: line
   - name: once
@@ -26,7 +21,6 @@ notebook:
     display_style: raw
     expand:
       command_name: once-name
-      block_name: once-block
       style: once
   - name: heredoc
     command: bash
