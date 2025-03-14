@@ -72,6 +72,13 @@ func (g *ExecutionGroup) add(block Block) AddAction {
 	return Bad
 }
 
+func (g ExecutionGroup) LineRange() Range {
+	if g.Code == nil {
+		return Range{Lower: 0, Upper: 0}
+	}
+	return g.Code.LineRange
+}
+
 func (g ExecutionGroup) String() string {
 	var extra string
 	if g.ConsumedEmptyLine && !g.StartedWithOutput {

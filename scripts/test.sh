@@ -17,3 +17,16 @@ compare <(expand simple) <(cat tests/simple.expanded.md)
 
 compare <(execute expand) <(cat tests/expand.executed.md)
 compare <(expand expand) <(cat tests/expand.expanded.md)
+
+function line() {
+	compare <(cat tests/line.md | go run . --config tests/line.config.yaml execute --line="$1") <(cat tests/line.executed."$1".md)
+}
+
+line 4
+line 7
+line -6
+line 10-
+line -
+line 4,14
+line 1,9-13
+line 4,-

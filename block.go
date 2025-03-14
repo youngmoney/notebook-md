@@ -57,8 +57,9 @@ func (b TextBlock) Empty() bool {
 }
 
 type CodeBlock struct {
-	Lines   []string
-	Command []string
+	Lines     []string
+	Command   []string
+	LineRange Range
 }
 
 func (b CodeBlock) CommandBody() string {
@@ -70,6 +71,7 @@ func (b *CodeBlock) addLine(line *Line) AddAction {
 		// TODO: consider a shlex
 		c := strings.TrimPrefix(strings.TrimPrefix(line.Content, kCodeTick), " ")
 		b.Command = strings.Split(c, " ")
+		b.LineRange.Lower = line.Number
 		return Add
 	}
 	switch line.Type {
@@ -79,6 +81,7 @@ func (b *CodeBlock) addLine(line *Line) AddAction {
 	case CodeTickAndLine:
 		return Bad
 	case CodeTickLine:
+		b.LineRange.Upper = line.Number
 		return AddAndClose
 	case OutputStartLine:
 		return Bad

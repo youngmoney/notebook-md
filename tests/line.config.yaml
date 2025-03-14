@@ -1,0 +1,5 @@
+notebook:
+  commands:
+  - name: cat
+    command: cat
+    display_style: raw

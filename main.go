@@ -54,7 +54,7 @@ func executeGroup(i *ExecutionGroup, config *Config) *ExecutionGroup {
 	return &o
 }
 
-func commandExecute(config *Config) error {
+func commandExecute(config *Config, r MultiRange) error {
 	lines := readLines()
 	groups, err := parse(&lines)
 	if err != nil {
@@ -66,7 +66,11 @@ func commandExecute(config *Config) error {
 		case *TextGroup:
 			out = append(out, g)
 		case *ExecutionGroup:
-			out = append(out, executeGroup(g.(*ExecutionGroup), config))
+			if r.Overlaps(g.(*ExecutionGroup).LineRange()) {
+				out = append(out, executeGroup(g.(*ExecutionGroup), config))
+			} else {
+				out = append(out, g)
+			}
 		}
 	}
 	for i, g := range out {
@@ -126,9 +130,14 @@ func main() {
 	switch flag.Arg(0) {
 	case "execute":
 		fs := flag.NewFlagSet("execute", flag.ExitOnError)
-		// lines := fs.String("line", "", "lines to execute <line>|<start line>-<end line>|-<end-line>|<start-line>- comma seperated")
+		lines := fs.String("line", "", "lines to execute <line>|<start line>-<end line>|-<end-line>|<start-line>- comma seperated")
 		fs.Parse(flag.Args()[1:])
-		err := commandExecute(&config)
+		lineRange, lerr := MultiRangeFromString(*lines)
+		if lerr != nil {
+			fmt.Println(lerr)
+			os.Exit(1)
+		}
+		err := commandExecute(&config, lineRange)
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
