@@ -95,3 +95,32 @@ notebook:
       command_name: inline name override (style dependent)
       style: NONE|HIDE|LINE|ONCE|HEREDOC
 ```
+
+## Vim
+
+``` vim
+function! RunNotebook(mode) range
+    write
+    echo "Executing..."
+    if a:mode == 0
+        " Execute the entire file
+        execute "%!notebook-md execute"
+    endif
+    if a:mode == 1
+        " Execute the selected lines
+        execute "%!notebook-md execute --line " . a:firstline . "-" . a:lastline
+    endif
+    if a:mode == 2
+        " Execute the current line and the rest of the file
+        execute "%!notebook-md execute --line " . line('.') . "-"
+    endif
+    silent !tput bel
+    redraw!
+    redraw!
+    echo "Done"
+endfunction
+
+autocmd Filetype markdown map <leader>E :call RunNotebook(0)<CR>
+autocmd Filetype markdown map <leader>e :call RunNotebook(1)<CR>
+autocmd Filetype markdown map <leader>ee :call RunNotebook(2)<CR>
+```
