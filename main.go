@@ -17,7 +17,7 @@ func readLines() []string {
 	}
 
 	if err := scanner.Err(); err != nil {
-		fmt.Println(err)
+		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
 	return lines
@@ -134,12 +134,12 @@ func main() {
 		fs.Parse(flag.Args()[1:])
 		lineRange, lerr := MultiRangeFromString(*lines)
 		if lerr != nil {
-			fmt.Println(lerr)
+			fmt.Fprintln(os.Stderr, lerr)
 			os.Exit(1)
 		}
 		err := commandExecute(&config, lineRange)
 		if err != nil {
-			fmt.Println(err)
+			fmt.Fprintln(os.Stderr, err)
 			os.Exit(1)
 		}
 	case "expand":
@@ -148,9 +148,9 @@ func main() {
 		ExitIfNonZero(commandExpand(&config))
 	default:
 		if flag.NArg() > 0 {
-			fmt.Println("unknown command:", flag.Arg(0))
+			fmt.Fprintln(os.Stderr, "unknown command:", flag.Arg(0))
 		}
-		fmt.Println("supported commands: execute, expand")
+		fmt.Fprintln(os.Stderr, "supported commands: execute, expand")
 		os.Exit(1)
 
 	}
